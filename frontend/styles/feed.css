@@ -1,0 +1,44 @@
+.feedPage {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+.feedPage h2 {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.postForm {
+  margin: 30px 20px 10px 20px;
+  color: black;
+  align-self: center;
+  justify-self: center;
+  width: 38%;
+  min-width: 20rem;
+}
+.postForm label {
+  margin: 10px;
+  color: black;
+  font-size: 15px;
+  font-weight: bold;
+}
+.feed {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.post {
+  margin: 20px;
+  color: black;
+  margin-bottom: 10px;
+  max-width: 35%;
+  min-width: 19rem;
+}
+.commentsPost {
+  color: grey;
+  font-size: 15px;
+}
