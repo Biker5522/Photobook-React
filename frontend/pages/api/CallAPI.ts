@@ -13,16 +13,3 @@ export async function getUserByUsername (username: any)
           console.log(err);
         }
 }
-
-export async function getPosts () 
-{
-        try {
-          const res = await fetch(`https://jsonplaceholder.typicode.com/posts`);
-          const data = await res.json();
-
-          console.log(data);
-          return data;
-        } catch (err) {
-          console.log(err);
-        }
-}
