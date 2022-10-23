@@ -1,6 +1,19 @@
+import { useRef, useState } from 'react';
+import { getUserByLoginAndPassword } from './api/CallAPI';
+
 export default function Login() {
+
+  const userLogin = useRef<any>(null); // login = email
+  const userPassword = useRef<any>(null); // password = zipcode
+  const [user, setUser] = useState<any>()
+
+  async function getUser() {
+    setUser(await getUserByLoginAndPassword(userLogin, userPassword));
+  }
+
   return (
     <div className="max-w-2xl mx-auto loginPage">
+      {user == null && 
       <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
         <form className="space-y-6" action="#">
           <h2 className="text-xl font-medium text-gray-900 dark:text-white">
@@ -14,6 +27,7 @@ export default function Login() {
               Your email
             </label>
             <input
+              ref={userLogin}
               type="email"
               name="email"
               id="email"
@@ -29,6 +43,7 @@ export default function Login() {
               Your password
             </label>
             <input
+              ref={userPassword}
               type="password"
               name="password"
               id="password"
@@ -39,6 +54,7 @@ export default function Login() {
           <div className="flex items-center justify-center h-5 ">
             <button
               type="submit"
+              onClick={getUser}
               className="w-3/5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Login
@@ -55,6 +71,31 @@ export default function Login() {
           </div>
         </form>
       </div>
+      }
+      {user != null && 
+      <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
+        <div className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+          <h2>Hello {user.name}!</h2>
+          <p className="mb-3">Name: {user.name}</p>
+          <p className="mb-3">Username: {user.username}</p>
+          <p className="mb-3">E-mail: {user.email}</p>
+          <p className="mb-3">Phone: {user.phone}</p>
+          <p className="mb-3">Website: <a href={'https://' + user.website}>{user.website}</a></p>
+          <h2>Address:</h2>
+          <p className="mb-3">Street: {user.address.street}</p>
+          <p className="mb-3">Suite: {user.address.suite}</p>
+          <p className="mb-3">City: {user.address.city}</p>
+          <p className="mb-3">Zipcode: {user.address.zipcode}</p>
+          <h3>Geo:</h3>
+          <p className="mb-3">lat: {user.address.geo.lat}</p>
+          <p className="mb-3">lng: {user.address.geo.lng}</p>
+          <h2>Company:</h2>
+          <p className="mb-3">Name: {user.company.name}</p>
+          <p className="mb-3">Catch Phrase: {user.company.catchPhrase}</p>
+          <p className="mb-3">BS: {user.company.bs}</p>
+        </div>
+      </div>
+      }
     </div>
   )
 }
