@@ -8,6 +8,7 @@ export async function getUserByUsername (username: any)
             (u: any) => u.username == username.current?.value
           );
           console.log(user);
+          return user;
         } catch (err) {
           console.log(err);
         }

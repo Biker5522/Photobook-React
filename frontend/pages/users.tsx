@@ -1,10 +1,15 @@
-import {useRef} from 'react';
+import { useRef, useState } from 'react';
 import { getUserByUsername } from './api/CallAPI';
 
 
 export default function Users() {
   
     const username = useRef<any>(null);
+    const [user, setUser] = useState<any>()
+
+    async function getUser() {
+      setUser(await getUserByUsername(username));
+    }
 
     return (
       <div className="max-w-2xl mx-auto loginPage">
@@ -26,12 +31,32 @@ export default function Users() {
             <div className="flex items-center justify-center h-5 ">
               <button
                 type="submit"
-                onClick={getUserByUsername.bind(null, username)}
+                onClick={getUser}
                 className="w-3/5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Find
               </button>
             </div>
+                {user != null && 
+                  <div className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                    <h2>User: {user.name}</h2>
+                    <p className="mb-3">ID: {user.id}</p>
+                    <p className="mb-3">Username: {user.username}</p>
+                    <p className="mb-3">E-mail: {user.email}</p>
+                    <p className="mb-3">Phone: {user.phone}</p>
+                    <p className="mb-3">Website: <a href={'https://' + user.website}>{user.website}</a></p>
+                  </div>
+                }
+                {user == null &&
+                  <div className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                    <h2>User: </h2>
+                    <p className="mb-3">ID: </p>
+                    <p className="mb-3">Username: </p>
+                    <p className="mb-3">E-mail: </p>
+                    <p className="mb-3">Phone: </p>
+                    <p className="mb-3">Website: </p>
+                  </div>
+                } 
           </form>
         </div>
       </div>
