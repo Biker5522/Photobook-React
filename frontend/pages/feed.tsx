@@ -71,7 +71,6 @@ export default function Feed() {
       <div className="feed">
         {posts.map((post: any, index: any) => {
           return (
-
             <div className="postsContainer">
               <div
                 className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
@@ -86,7 +85,7 @@ export default function Feed() {
                   comments
                 </a>
                 <p className="mb-3  text-grey commentsPost float-left">
-                  By Juan Pablo
+                  DO ZROBIENIA XD
                 </p>
               </div>
               {show === true ? (
@@ -97,7 +96,6 @@ export default function Feed() {
                   />
                 </div>
               ) : null}
-
             </div>
           )
         })}
