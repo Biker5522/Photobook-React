@@ -5,10 +5,26 @@ export async function getUserByUsername (username: any)
           const data = await res.json();
 
           const user = data.find(
-            (u: any) => u.username == username.current?.value
+            (u: any) => u.name == username.current?.value
           );
           console.log(user);
           return user;
+        } catch (err) {
+          console.log(err);
+        }
+}
+
+export async function getPhotoByID (photoID: any) 
+{
+        try {
+          const res = await fetch(`https://jsonplaceholder.typicode.com/photos`);
+          const data = await res.json();
+
+          const photo = data.find(
+            (p: any) => p.id == photoID.current?.value
+          );
+          console.log(photo);
+          return photo;
         } catch (err) {
           console.log(err);
         }
