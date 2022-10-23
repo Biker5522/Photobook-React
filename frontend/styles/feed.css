@@ -48,3 +48,7 @@
   color: grey;
   font-size: 15px;
 }
+.commentsPost:hover {
+  color: grey;
+  text-decoration: underline;
+}

@@ -11,7 +11,6 @@ export default function CommentsComponent(props: any) {
       })
   }, [])
 
-  //console.log(props.activePostId == props.postId)
   if (props.activePostId == props.postId)
     return (
       <div>

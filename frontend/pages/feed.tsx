@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import CommentsComponent from '../components/commentsComponent'
 export default function Feed() {
   const [posts, setPosts] = useState<any>([])
+  const [show, setShow] = useState(false)
   const [isLoading, setLoading] = useState(false)
   const [activePostId, setActivePostId] = useState()
 
@@ -17,7 +18,12 @@ export default function Feed() {
 
   const HandleClick = (post: any) => {
     return (event: React.MouseEvent) => {
-      setActivePostId(post.id)
+      if (post.id === activePostId && show == true) {
+        setShow(false)
+      } else {
+        setShow(true)
+        setActivePostId(post.id)
+      }
     }
   }
 
@@ -82,7 +88,14 @@ export default function Feed() {
                   By Juan Pablo
                 </p>
               </div>
-              <CommentsComponent activePostId={activePostId} postId={post.id} />
+              {show === true ? (
+                <div>
+                  <CommentsComponent
+                    activePostId={activePostId}
+                    postId={post.id}
+                  />
+                </div>
+              ) : null}
             </div>
           )
         })}
