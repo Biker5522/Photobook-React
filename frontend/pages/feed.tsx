@@ -56,7 +56,10 @@ export default function Feed() {
       <div className="feed">
         {posts.map((post: any) => {
           return (
-            <div className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <div 
+            className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
+            key={post.id}
+            >
               <h2>{post.title}</h2>
               <p className="mb-3">{post.body}</p>
               <p className="mb-3 text-grey commentsPost float-right">
