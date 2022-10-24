@@ -57,3 +57,32 @@ export async function getUserPosts(user: any) {
     console.log(err);
   }
 }
+
+export async function createUser(user: any) {
+  try {
+    const res = await fetch('https://jsonplaceholder.typicode.com/users', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: user.email,
+        name: user.name,
+        username: user.username,
+        phone: user.phone,
+        website: user.website,
+        street: user.street,
+        suite: user.suite,
+        city: user.city,
+        zipcode: user.zipcode,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+
+    const data = await res.json();
+
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}
