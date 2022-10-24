@@ -45,3 +45,18 @@ export async function getUserByLoginAndPassword (userLogin: any, userPassword: a
           console.log(err);
         }
 }
+
+export async function getUserPosts (user: any) 
+{
+        try {
+          const resPosts = await fetch(`https://jsonplaceholder.typicode.com/posts`);
+          const dataPosts = await resPosts.json();
+
+          const posts = dataPosts.filter((p: any) => p.userId == user.id)
+
+          console.log(posts);
+          return posts;
+        } catch (err) {
+          console.log(err);
+        }
+}
