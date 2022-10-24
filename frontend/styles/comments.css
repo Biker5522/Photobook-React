@@ -1,0 +1,12 @@
+.commentsContainer {
+  display: flex;
+  justify-content: center;
+  max-width: 27rem;
+}
+.comment {
+  background-color: white;
+  color: black;
+  padding: 10px;
+  border-radius: 25px;
+  margin-bottom: 10px;
+}

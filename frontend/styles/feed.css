@@ -31,14 +31,24 @@
   justify-content: center;
   align-items: center;
 }
+.postsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+}
 .post {
   margin: 20px;
   color: black;
   margin-bottom: 10px;
-  max-width: 35%;
   min-width: 19rem;
 }
 .commentsPost {
   color: grey;
   font-size: 15px;
+}
+.commentsPost:hover {
+  color: grey;
+  text-decoration: underline;
 }
