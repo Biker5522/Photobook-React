@@ -21,7 +21,7 @@ export default function Login() {
   //Set Cookie of User
   useEffect(() => {
     setCookie("user", user);
-  }, [user]);
+  }, [setCookie, user]);
 
   return (
     <div className="max-w-2xl mx-auto loginPage">
