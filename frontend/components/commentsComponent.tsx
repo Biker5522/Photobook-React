@@ -41,3 +41,16 @@ export function NumberOfComments(props: any) {
   }, [])
   return <span>{number}</span>
 }
+
+export function AuthorOfPost(props: any) {
+  const [author, setAuthor] = useState([])
+  useEffect(() => {
+    fetch(`https://jsonplaceholder.typicode.com/users/${props.userId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAuthor(data.name)
+        console.log(data)
+      })
+  }, [])
+  return <span>{author}</span>
+}

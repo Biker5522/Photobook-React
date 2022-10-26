@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import {
   CommentsComponent,
   NumberOfComments,
+  AuthorOfPost,
 } from '../components/commentsComponent'
 export default function Feed() {
   const [posts, setPosts] = useState<any>([])
@@ -91,7 +92,7 @@ export default function Feed() {
                 </a>
 
                 <p className="mb-3  text-grey commentsPost float-left">
-                  DO ZROBIENIA XD
+                  <AuthorOfPost userId={post.userId} />
                 </p>
               </div>
               {show === true ? (
