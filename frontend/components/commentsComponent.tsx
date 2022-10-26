@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 
-export default function CommentsComponent(props: any) {
+export function CommentsComponent(props: any) {
   const [comments, setComments] = useState([])
   useEffect(() => {
     fetch(`https://jsonplaceholder.typicode.com/posts/${props.postId}/comments`)
@@ -27,4 +27,17 @@ export default function CommentsComponent(props: any) {
       </div>
     )
   else return null
+}
+
+export function NumberOfComments(props: any) {
+  const [number, setNumber] = useState([])
+  useEffect(() => {
+    fetch(`https://jsonplaceholder.typicode.com/posts/${props.postId}/comments`)
+      .then((res) => res.json())
+      .then((data) => {
+        setNumber(data.length)
+        console.log(number)
+      })
+  }, [])
+  return <span>{number}</span>
 }

@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
-import CommentsComponent from '../components/commentsComponent'
+import {
+  CommentsComponent,
+  NumberOfComments,
+} from '../components/commentsComponent'
 export default function Feed() {
   const [posts, setPosts] = useState<any>([])
   const [show, setShow] = useState(false)
   const [isLoading, setLoading] = useState(false)
   const [activePostId, setActivePostId] = useState()
 
+  //Get Posts
   useEffect(() => {
     setLoading(true)
     fetch('https://jsonplaceholder.typicode.com/posts')
@@ -16,6 +20,7 @@ export default function Feed() {
       })
   }, [])
 
+  //Display comments
   const HandleClick = (post: any) => {
     return (event: React.MouseEvent) => {
       if (post.id === activePostId && show == true) {
@@ -82,8 +87,9 @@ export default function Feed() {
                   className="mb-3 text-grey commentsPost float-right"
                   onClick={HandleClick(post)}
                 >
-                  comments
+                  comments <NumberOfComments postId={post.id} />
                 </a>
+
                 <p className="mb-3  text-grey commentsPost float-left">
                   DO ZROBIENIA XD
                 </p>
