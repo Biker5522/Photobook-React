@@ -38,8 +38,10 @@ export default function Register() {
   const city = useRef<any>(null)
   const zipcode = useRef<any>(null)
 
-  async function registerUser() {
+  async function registerUser(e: any) {
+    e.preventDefault();
     console.log("registerUser");
+    
     const user: User = {
       email: email.current?.value,
       name: name.current?.value,

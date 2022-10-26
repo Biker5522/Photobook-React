@@ -1,37 +1,37 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 import {
   CommentsComponent,
   NumberOfComments,
   AuthorOfPost,
-} from '../components/commentsComponent'
+} from "../components/commentsComponent";
 export default function Feed() {
-  const [posts, setPosts] = useState<any>([])
-  const [show, setShow] = useState(false)
-  const [isLoading, setLoading] = useState(false)
-  const [activePostId, setActivePostId] = useState()
+  const [posts, setPosts] = useState<any>([]);
+  const [show, setShow] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [activePostId, setActivePostId] = useState();
 
   //Get Posts
   useEffect(() => {
-    setLoading(true)
-    fetch('https://jsonplaceholder.typicode.com/posts')
+    setLoading(true);
+    fetch("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.json())
       .then((data) => {
-        setPosts(data)
-        setLoading(false)
-      })
-  }, [])
+        setPosts(data);
+        setLoading(false);
+      });
+  }, []);
 
   //Display comments
   const HandleClick = (post: any) => {
     return (event: React.MouseEvent) => {
       if (post.id === activePostId && show == true) {
-        setShow(false)
+        setShow(false);
       } else {
-        setShow(true)
-        setActivePostId(post.id)
+        setShow(true);
+        setActivePostId(post.id);
       }
-    }
-  }
+    };
+  };
 
   return (
     <div className="feedPage">
@@ -77,11 +77,8 @@ export default function Feed() {
       <div className="feed">
         {posts.map((post: any, index: any) => {
           return (
-            <div className="postsContainer">
-              <div
-                className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
-                key={index}
-              >
+            <div className="postsContainer" key={index}>
+              <div className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                 <h2>{post.title}</h2>
                 <p className="mb-3">{post.body}</p>
                 <a
@@ -104,9 +101,9 @@ export default function Feed() {
                 </div>
               ) : null}
             </div>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }

@@ -5,7 +5,8 @@ export default function Users() {
   const username = useRef<any>(null)
   const [user, setUser] = useState<any>()
 
-  async function getUser() {
+  async function getUser(e: any) {
+    e.preventDefault();
     setUser(await getUserByUsername(username))
   }
 
@@ -23,7 +24,7 @@ export default function Users() {
               name="username"
               id="username"
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              placeholder="Search user by username"
+              placeholder="Search user by name"
             />
           </div>
           <div className="flex items-center justify-center h-5 ">

@@ -10,11 +10,13 @@ export default function Login() {
   const [posts, setPosts] = useState<any>([]);
   const [showPosts, setShowPosts] = useState<any>(false);
 
-  async function getUser() {
+  async function getUser(e: any) {
+    e.preventDefault();
     setUser(await getUserByLoginAndPassword(userLogin, userPassword));
   }
 
-  async function getPosts() {
+  async function getPosts(e: any) {
+    e.preventDefault();
     setPosts(await getUserPosts(user));
     setShowPosts(true);
   }

@@ -7,7 +7,8 @@ export default function Users() {
     const photoID = useRef<any>(null);
     const [photo, setPhoto] = useState<any>()
 
-    async function getPhoto() {
+    async function getPhoto(e: any) {
+      e.preventDefault();
       setPhoto(await getPhotoByID(photoID));
     }
 
