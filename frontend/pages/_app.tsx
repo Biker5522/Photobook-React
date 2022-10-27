@@ -5,7 +5,7 @@ import '../styles/feed.css'
 import '../styles/comments.css'
 import Navbar from '../components/navbar'
 import type { AppProps } from 'next/app'
-
+import { useCookies } from 'react-cookie'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>

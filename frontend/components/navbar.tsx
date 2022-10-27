@@ -1,4 +1,21 @@
+import { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
+
 export default function Navbar() {
+  //Get user from cookies
+  const [cookies, setCookie, removeCookie] = useCookies(['user'])
+  const [user, setUser] = useState<any>()
+
+  //Get User from cookie
+  useEffect(() => {
+    setUser(cookies.user)
+  }, [])
+
+  //Logout
+  async function Logout() {
+    removeCookie('user')
+  }
+
   return (
     <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
@@ -61,22 +78,36 @@ export default function Navbar() {
                 Users
               </a>
             </li>
-            <li>
-              <a
-                href="/login"
-                className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >
-                Login
-              </a>
-            </li>
-            <li>
-              <a
-                href="/register"
-                className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >
-                Register
-              </a>
-            </li>
+            {user != null ? (
+              <li>
+                <a
+                  href="/"
+                  className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  onClick={Logout}
+                >
+                  Logout
+                </a>
+              </li>
+            ) : (
+              <>
+                <li>
+                  <a
+                    href="/login"
+                    className="block py-2 pr-4  pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  >
+                    Login
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/register"
+                    className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  >
+                    Register
+                  </a>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

@@ -1,29 +1,29 @@
-import { useEffect, useRef, useState } from "react";
-import { getUserByLoginAndPassword, getUserPosts } from "./api/CallAPI";
-import { useCookies } from "react-cookie";
+import { useEffect, useRef, useState } from 'react'
+import { getUserByLoginAndPassword, getUserPosts } from './api/CallAPI'
+import { useCookies } from 'react-cookie'
 
 export default function Login() {
-  const userLogin = useRef<any>(null); // login = email
-  const userPassword = useRef<any>(null); // password = zipcode
-  const [cookies, setCookie] = useCookies(["user"]);
-  const [user, setUser] = useState<any>();
-  const [posts, setPosts] = useState<any>([]);
-  const [showPosts, setShowPosts] = useState<any>(false);
+  const userLogin = useRef<any>(null) // login = email
+  const userPassword = useRef<any>(null) // password = zipcode
+  const [cookies, setCookie] = useCookies(['user'])
+  const [user, setUser] = useState<any>()
+  const [posts, setPosts] = useState<any>([])
+  const [showPosts, setShowPosts] = useState<any>(false)
 
   async function getUser(e: any) {
-    e.preventDefault();
-    setUser(await getUserByLoginAndPassword(userLogin, userPassword));
+    e.preventDefault()
+    setUser(await getUserByLoginAndPassword(userLogin, userPassword))
   }
 
   async function getPosts(e: any) {
-    e.preventDefault();
-    setPosts(await getUserPosts(user));
-    setShowPosts(true);
+    e.preventDefault()
+    setPosts(await getUserPosts(user))
+    setShowPosts(true)
   }
   //Set Cookie of User
   useEffect(() => {
-    setCookie("user", user);
-  }, [setCookie, user]);
+    setCookie('user', user)
+  }, [user])
 
   return (
     <div className="max-w-2xl mx-auto loginPage">
@@ -75,7 +75,7 @@ export default function Login() {
               </button>
             </div>
             <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-              Not registered?{" "}
+              Not registered?{' '}
               <a
                 href="/register"
                 className="text-blue-700 hover:underline dark:text-blue-500"
@@ -95,7 +95,7 @@ export default function Login() {
             <p className="mb-3">E-mail: {user.email}</p>
             <p className="mb-3">Phone: {user.phone}</p>
             <p className="mb-3">
-              Website: <a href={"https://" + user.website}>{user.website}</a>
+              Website: <a href={'https://' + user.website}>{user.website}</a>
             </p>
             <h2>Address:</h2>
             <p className="mb-3">Street: {user.address.street}</p>
@@ -140,10 +140,10 @@ export default function Login() {
                     By {user.name}
                   </p>
                 </div>
-              );
+              )
             })}
         </div>
       )}
     </div>
-  );
+  )
 }
