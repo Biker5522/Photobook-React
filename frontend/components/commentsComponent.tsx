@@ -7,7 +7,6 @@ export function CommentsComponent(props: any) {
       .then((res) => res.json())
       .then((data) => {
         setComments(data)
-        console.log(data)
       })
   }, [])
 
@@ -36,7 +35,6 @@ export function NumberOfComments(props: any) {
       .then((res) => res.json())
       .then((data) => {
         setNumber(data.length)
-        console.log(number)
       })
   }, [])
   return <span>{number}</span>
@@ -49,7 +47,6 @@ export function AuthorOfPost(props: any) {
       .then((res) => res.json())
       .then((data) => {
         setAuthor(data.name)
-        console.log(data)
       })
   }, [])
   return <span>{author}</span>
