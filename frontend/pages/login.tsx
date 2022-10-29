@@ -6,7 +6,7 @@ export default function Login() {
   const userLogin = useRef<any>(null) // login = email
   const userPassword = useRef<any>(null) // password = zipcode
   const [cookies, setCookie] = useCookies(['user'])
-  const [user, setUser] = useState<any>()
+  const [user, setUser] = useState<any>(null)
   const [posts, setPosts] = useState<any>([])
   const [showPosts, setShowPosts] = useState<any>(false)
 
@@ -22,7 +22,9 @@ export default function Login() {
   }
   //Set Cookie of User
   useEffect(() => {
-    setCookie('user', user)
+    if (user != null) {
+      setCookie('user', user)
+    }
   }, [user])
 
   return (

@@ -16,11 +16,13 @@ export default function Feed() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [error, setError] = useState('')
-  const router = useRouter()
 
   //Cookies
   const [cookies, setCookie, removeCookie] = useCookies(['user'])
-  const [user, setUser] = useState<any>()
+  const [user, setUser] = useState<any>(null)
+
+  //Router
+  const router = useRouter()
 
   //Get User from cookie
   useEffect(() => {
@@ -142,6 +144,7 @@ export default function Feed() {
                   <CommentsComponent
                     activePostId={activePostId}
                     postId={post.id}
+                    user={user}
                   />
                 </div>
               ) : null}
