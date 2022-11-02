@@ -1,25 +1,27 @@
 import { SyntheticEvent, useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import Router, { useRouter } from 'next/router'
+import Post from '../components/interfaces/post'
+import User from '../components/interfaces/user'
 import {
   CommentsComponent,
   NumberOfComments,
   AuthorOfPost,
 } from '../components/commentsComponent'
 export default function Feed() {
-  const [show, setShow] = useState(false)
-  const [isLoading, setLoading] = useState(false)
+  const [show, setShow] = useState<boolean>(false)
+  const [isLoading, setLoading] = useState<boolean>(false)
 
   //Posts
-  const [activePostId, setActivePostId] = useState()
-  const [posts, setPosts] = useState<any>([])
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [error, setError] = useState('')
+  const [activePostId, setActivePostId] = useState<number>()
+  const [posts, setPosts] = useState<Post[]>([])
+  const [title, setTitle] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
+  const [error, setError] = useState<string>('')
 
   //Cookies
   const [cookies, setCookie, removeCookie] = useCookies(['user'])
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User>()
 
   //Router
   const router = useRouter()
@@ -40,14 +42,14 @@ export default function Feed() {
       })
   }, [])
 
-  const DeletePost = (e: SyntheticEvent, postId: any) => {
+  const DeletePost = (e: SyntheticEvent, postId: number) => {
     e.preventDefault()
     const filteredArray = [...posts]
     setPosts(filteredArray.filter((el) => el.id != postId))
   }
 
   //Display comments
-  const HandleClick = (post: any) => {
+  const HandleClick = (post: Post) => {
     return (event: React.MouseEvent) => {
       if (post.id === activePostId && show == true) {
         setShow(false)
@@ -67,10 +69,11 @@ export default function Feed() {
     } else if (description == '') {
       setError('Valid description is required')
     } else {
-      let post = {
+      let post: Post = {
         title: title,
         body: description,
         userId: user.id,
+        id: posts[0].id + 100,
       }
       const newPosts = [post, ...posts]
       setPosts(newPosts)
@@ -131,7 +134,7 @@ export default function Feed() {
 
       {/* Posts */}
       <div className="feed">
-        {posts.map((post: any) => {
+        {posts.map((post: Post) => {
           return (
             <div className="postsContainer" key={post.id}>
               <div className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">

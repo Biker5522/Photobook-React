@@ -6,8 +6,8 @@ export function CommentsComponent(props: any) {
   const [user, setUser] = useState(props.user)
 
   //Comment
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
+  const [title, setTitle] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
   const [error, setError] = useState('')
 
   //Router
