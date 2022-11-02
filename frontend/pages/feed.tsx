@@ -7,12 +7,12 @@ import {
   AuthorOfPost,
 } from '../components/commentsComponent'
 export default function Feed() {
-  const [posts, setPosts] = useState<any>([])
   const [show, setShow] = useState(false)
   const [isLoading, setLoading] = useState(false)
-  const [activePostId, setActivePostId] = useState()
 
-  //Post
+  //Posts
+  const [activePostId, setActivePostId] = useState()
+  const [posts, setPosts] = useState<any>([])
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [error, setError] = useState('')
@@ -39,6 +39,12 @@ export default function Feed() {
         setLoading(false)
       })
   }, [])
+
+  const DeletePost = (e: SyntheticEvent, postId: any) => {
+    e.preventDefault()
+    const filteredArray = [...posts]
+    setPosts(filteredArray.filter((el) => el.id != postId))
+  }
 
   //Display comments
   const HandleClick = (post: any) => {
@@ -74,6 +80,7 @@ export default function Feed() {
 
   return (
     <div className="feedPage">
+      {/* Add Post Form */}
       <div className="postForm m-0 p-4  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
         <form
           className="space-y-6"
@@ -121,12 +128,23 @@ export default function Feed() {
           />
         </form>
       </div>
+
+      {/* Posts */}
       <div className="feed">
-        {posts.map((post: any, index: any) => {
+        {posts.map((post: any) => {
           return (
-            <div className="postsContainer" key={index}>
+            <div className="postsContainer" key={post.id}>
               <div className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                {user?.id === post.userId ? (
+                  <div
+                    className="float-right"
+                    onClick={(e) => DeletePost(e, post.id)}
+                  >
+                    x
+                  </div>
+                ) : null}
                 <h2>{post.title}</h2>
+
                 <p className="mb-3">{post.body}</p>
                 <a
                   className="mb-3 text-grey commentsPost float-right"
@@ -139,6 +157,7 @@ export default function Feed() {
                   <AuthorOfPost userId={post.userId} />
                 </p>
               </div>
+              {/* Comments */}
               {show === true ? (
                 <div>
                   <CommentsComponent
