@@ -82,9 +82,9 @@ export default function Feed() {
   }
 
   return (
-    <div className="feedPage">
+    <div className="feed">
       {/* Add Post Form */}
-      <div className="postForm m-0 p-4  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+      <div className="feed__postForm m-0 p-4  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
         <form
           className="space-y-6"
           action="#"
@@ -133,11 +133,11 @@ export default function Feed() {
       </div>
 
       {/* Posts */}
-      <div className="feed">
+      <div className="feed__posts">
         {posts.map((post: Post) => {
           return (
-            <div className="postsContainer" key={post.id}>
-              <div className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <div key={post.id}>
+              <div className="postsContainer feed__posts__post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                 {user?.id === post.userId ? (
                   <div
                     className="float-right"
@@ -150,7 +150,7 @@ export default function Feed() {
 
                 <p className="mb-3">{post.body}</p>
                 <a
-                  className="mb-3 text-grey commentsPost float-right"
+                  className="mb-3 text-grey commentsPost feed__posts__post__commentsInfo float-right"
                   onClick={HandleClick(post)}
                 >
                   comments <NumberOfComments postId={post.id} />

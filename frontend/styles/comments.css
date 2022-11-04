@@ -1,12 +1,25 @@
-.commentsContainer {
+.commentsPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: black;
+}
+.commentsPage__comment {
   display: flex;
   justify-content: center;
   max-width: 27rem;
 }
-.comment {
+.commentsPage_commentForm {
+  background-color: white;
+  padding: 15px;
+  min-width: 17rem;
+}
+.commentsPage__comment {
   background-color: white;
   color: black;
   padding: 10px;
   border-radius: 25px;
   margin-bottom: 10px;
+  width: 25rem;
 }
