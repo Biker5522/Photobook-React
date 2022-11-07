@@ -24,6 +24,19 @@ export async function getPhotoByID(photoID: any) {
   }
 }
 
+export async function getPhotoByAlbumID(albumID: any) {
+  try {
+    const res = await fetch(`https://jsonplaceholder.typicode.com/photos`);
+    const data = await res.json();
+
+    const photos = data.filter((p: any) => p.albumId == albumID);
+    console.log(photos);
+    return photos;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export async function getUserByLoginAndPassword(
   userLogin: any,
   userPassword: any
