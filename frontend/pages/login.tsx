@@ -90,7 +90,7 @@ export default function Login() {
       )}
       {user != null && (
         <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
-          <div className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+          <div className="post p-6  bg-white rounded-lg text-gray-900 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
             <h2>Hello {user.name}!</h2>
             <p className="mb-3">Name: {user.name}</p>
             <p className="mb-3">Username: {user.username}</p>
@@ -130,7 +130,7 @@ export default function Login() {
             posts.map((post: any) => {
               return (
                 <div
-                  className="post p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
+                  className="post p-6 bg-white rounded-lg text-gray-900 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
                   key={post.id}
                 >
                   <h2>{post.title}</h2>

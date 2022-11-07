@@ -37,7 +37,7 @@ export default function Users() {
             </button>
           </div>
           {user != null && (
-            <div className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <div className="post p-6  bg-white rounded-lg text-gray-900 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
               <h2>User: {user.name}</h2>
               <p className="mb-3">ID: {user.id}</p>
               <p className="mb-3">Username: {user.username}</p>
@@ -49,7 +49,7 @@ export default function Users() {
             </div>
           )}
           {user == null && (
-            <div className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <div className="post p-6  bg-white rounded-lg text-gray-900 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
               <h2>User: </h2>
               <p className="mb-3">ID: </p>
               <p className="mb-3">Username: </p>

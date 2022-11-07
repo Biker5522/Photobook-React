@@ -39,7 +39,7 @@ export default function Users() {
               </button>
             </div>
                 {photo != null && 
-                  <div className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                  <div className="post p-6  bg-white rounded-lg text-gray-900 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                     <h2>Photo: </h2>
                     <p className="mb-3">Album ID: {photo.albumId}</p>
                     <p className="mb-3">Photo ID: {photo.id}</p>
@@ -49,7 +49,7 @@ export default function Users() {
                   </div>
                 }
                 {photo == null &&
-                  <div className="post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                  <div className="post p-6  bg-white rounded-lg text-gray-900 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                     <h2>Photo: </h2>
                     <p className="mb-3">Album ID: </p>
                     <p className="mb-3">Photo ID: </p>
