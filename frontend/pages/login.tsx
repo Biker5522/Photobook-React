@@ -1,25 +1,30 @@
-import { useEffect, useRef, useState } from 'react'
+import { SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { getUserByLoginAndPassword, getUserPosts } from './api/CallAPI'
 import { useCookies } from 'react-cookie'
+import Post from '../components/interfaces/post'
+import User from '../components/interfaces/user'
 
 export default function Login() {
-  const userLogin = useRef<any>(null) // login = email
-  const userPassword = useRef<any>(null) // password = zipcode
+  const userLogin = useRef<HTMLInputElement>(null) // login = email
+  const userPassword = useRef<HTMLInputElement>(null) // password = zipcode
   const [cookies, setCookie] = useCookies(['user'])
-  const [user, setUser] = useState<any>(null)
-  const [posts, setPosts] = useState<any>([])
-  const [showPosts, setShowPosts] = useState<any>(false)
+  const [user, setUser] = useState<User>()
+  const [posts, setPosts] = useState<Post[]>([])
+  const [showPosts, setShowPosts] = useState<Boolean>(false)
 
-  async function getUser(e: any) {
+  //Get user from API
+  async function getUser(e: SyntheticEvent) {
     e.preventDefault()
     setUser(await getUserByLoginAndPassword(userLogin, userPassword))
   }
 
-  async function getPosts(e: any) {
+  // Get user posts from API
+  async function getPosts(e: SyntheticEvent) {
     e.preventDefault()
     setPosts(await getUserPosts(user))
     setShowPosts(true)
   }
+
   //Set Cookie of User
   useEffect(() => {
     if (user != null) {
@@ -100,17 +105,17 @@ export default function Login() {
               Website: <a href={'https://' + user.website}>{user.website}</a>
             </p>
             <h2>Address:</h2>
-            <p className="mb-3">Street: {user.address.street}</p>
-            <p className="mb-3">Suite: {user.address.suite}</p>
-            <p className="mb-3">City: {user.address.city}</p>
-            <p className="mb-3">Zipcode: {user.address.zipcode}</p>
+            <p className="mb-3">Street: {user.address?.street}</p>
+            <p className="mb-3">Suite: {user.address?.suite}</p>
+            <p className="mb-3">City: {user.address?.city}</p>
+            <p className="mb-3">Zipcode: {user.address?.zipcode}</p>
             <h3>Geo:</h3>
-            <p className="mb-3">lat: {user.address.geo.lat}</p>
-            <p className="mb-3">lng: {user.address.geo.lng}</p>
+            <p className="mb-3">lat: {user.address?.geo?.lat}</p>
+            <p className="mb-3">lng: {user.address?.geo?.lng}</p>
             <h2>Company:</h2>
-            <p className="mb-3">Name: {user.company.name}</p>
-            <p className="mb-3">Catch Phrase: {user.company.catchPhrase}</p>
-            <p className="mb-3">BS: {user.company.bs}</p>
+            <p className="mb-3">Name: {user.company?.name}</p>
+            <p className="mb-3">Catch Phrase: {user.company?.catchPhrase}</p>
+            <p className="mb-3">BS: {user.company?.bs}</p>
           </div>
           <h2 className="text-black">
             Your posts are listed below {user.name}!
@@ -127,7 +132,7 @@ export default function Login() {
             </div>
           )}
           {showPosts &&
-            posts.map((post: any) => {
+            posts.map((post: Post) => {
               return (
                 <div
                   className="post p-6 bg-white rounded-lg text-gray-900 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"

@@ -1,11 +1,12 @@
-import { useRef, useState } from 'react'
+import { SyntheticEvent, useRef, useState } from 'react'
+import User from '../components/interfaces/user';
 import { getUserByUsername } from './api/CallAPI'
 
 export default function Users() {
-  const username = useRef<any>(null)
-  const [user, setUser] = useState<any>()
+  const username = useRef<HTMLInputElement>(null)
+  const [user, setUser] = useState<User>()
 
-  async function getUser(e: any) {
+  async function getUser(e: SyntheticEvent) {
     e.preventDefault();
     setUser(await getUserByUsername(username))
   }

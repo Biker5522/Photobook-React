@@ -1,13 +1,14 @@
-import { useRef, useState } from 'react';
+import { SyntheticEvent, useRef, useState } from 'react';
+import Photo from '../components/interfaces/photo';
 import { getPhotoByID } from './api/CallAPI';
 
 
 export default function Users() {
   
-    const photoID = useRef<any>(null);
-    const [photo, setPhoto] = useState<any>()
+    const photoID = useRef<HTMLInputElement>(null);
+    const [photo, setPhoto] = useState<Photo>()
 
-    async function getPhoto(e: any) {
+    async function getPhoto(e: SyntheticEvent) {
       e.preventDefault();
       setPhoto(await getPhotoByID(photoID));
     }

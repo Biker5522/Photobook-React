@@ -1,44 +1,20 @@
-import { useRef } from "react";
+import { SyntheticEvent, useRef } from "react";
+import User from "../components/interfaces/user";
 import { createUser } from "./api/CallAPI";
-
-class User {
-    email:string;
-    name:string;
-    username:string;
-    phone:string;
-    website:string;
-    street:string;
-    suite:string;
-    city:string;
-    zipcode:string;
-
-    constructor(u : User)
-    {
-        this.email = u.email;
-        this.name = u.name;
-        this.username = u.username;
-        this.phone = u.phone;
-        this.website = u.website;
-        this.street = u.street;
-        this.suite = u.suite;
-        this.city = u.city;
-        this.zipcode = u.zipcode;
-    }
-}
 
 export default function Register() {
   
-  const email = useRef<any>(null)
-  const name = useRef<any>(null)
-  const username = useRef<any>(null)
-  const phone = useRef<any>(null)
-  const website = useRef<any>(null)
-  const street = useRef<any>(null)
-  const suite = useRef<any>(null)
-  const city = useRef<any>(null)
-  const zipcode = useRef<any>(null)
+  const email = useRef<HTMLInputElement>(null)
+  const name = useRef<HTMLInputElement>(null)
+  const username = useRef<HTMLInputElement>(null)
+  const phone = useRef<HTMLInputElement>(null)
+  const website = useRef<HTMLInputElement>(null)
+  const street = useRef<HTMLInputElement>(null)
+  const suite = useRef<HTMLInputElement>(null)
+  const city = useRef<HTMLInputElement>(null)
+  const zipcode = useRef<HTMLInputElement>(null)
 
-  async function registerUser(e: any) {
+  async function registerUser(e: SyntheticEvent) {
     e.preventDefault();
     console.log("registerUser");
     
@@ -48,10 +24,12 @@ export default function Register() {
       username: username.current?.value,
       phone: phone.current?.value,
       website: website.current?.value,
-      street: street.current?.value,
-      suite: suite.current?.value,
-      city: city.current?.value,
-      zipcode: zipcode.current?.value
+      address: {
+        street: street.current?.value,
+        suite: suite.current?.value,
+        city: city.current?.value,
+        zipcode: zipcode.current?.value
+      }
     };
     console.log(user);
     createUser(user);
@@ -77,6 +55,7 @@ export default function Register() {
               type="email"
               name="email"
               id="email"
+              required
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               placeholder="name@company.com"
             />
@@ -93,6 +72,7 @@ export default function Register() {
               type="text"
               name="name"
               id="name"
+              required
               placeholder="Full name"
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
@@ -109,6 +89,7 @@ export default function Register() {
               type="text"
               name="username"
               id="username"
+              required
               placeholder="Username"
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
@@ -125,6 +106,7 @@ export default function Register() {
               type="text"
               name="phone"
               id="phone"
+              required
               placeholder="Phone"
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
@@ -141,6 +123,7 @@ export default function Register() {
               type="text"
               name="website"
               id="website"
+              required
               placeholder="Website"
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
@@ -157,6 +140,7 @@ export default function Register() {
               type="text"
               name="street"
               id="street"
+              required
               placeholder="Street"
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
@@ -173,6 +157,7 @@ export default function Register() {
               type="text"
               name="suite"
               id="suite"
+              required
               placeholder="Suite"
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
@@ -189,6 +174,7 @@ export default function Register() {
               type="text"
               name="city"
               id="city"
+              required
               placeholder="City"
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
@@ -205,6 +191,7 @@ export default function Register() {
               type="text"
               name="zipcode"
               id="zipcode"
+              required
               placeholder="Zipcode"
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
