@@ -19,6 +19,7 @@ export default function Register() {
     console.log("registerUser");
     
     const user: User = {
+      id: Date.now(),
       email: email.current?.value,
       name: name.current?.value,
       username: username.current?.value,
