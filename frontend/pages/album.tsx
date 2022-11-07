@@ -4,33 +4,26 @@ import { useCookies } from "react-cookie";
 import Album from "../components/interfaces/album";
 import Photo from "../components/interfaces/photo";
 import User from "../components/interfaces/user";
+import { PhotoComponent } from "../components/PhotoComponent";
 import { getPhotoByAlbumID } from "./api/CallAPI";
 
 export default function Users() {
-  const [show, setShow] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
 
   //Posts
-  const [photos, setPhotos] = useState<Photo[]>([]);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [albumID, setAlbumID] = useState<number>();
   const [title, setTitle] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
   const [error, setError] = useState<string>("");
+  let newPhoto: Photo;
 
   //Cookies
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [user, setUser] = useState<User>();
 
-  //Router
-  const router = useRouter();
 
-  const findAlbumPhotos = async (e: SyntheticEvent, albumID: number) => {
-    e.preventDefault();
-    setPhotos(await getPhotoByAlbumID(albumID));
-    setShow(!show);
-  };
 
   //Get User from cookie
   useEffect(() => {
@@ -48,41 +41,38 @@ export default function Users() {
       });
   }, []);
 
-  //Delete Photo
-  const DeletePhoto = (e: SyntheticEvent, photoId: number) => {
-    e.preventDefault();
-    const filteredArray = [...photos];
-    setPhotos(filteredArray.filter((el) => el.id != photoId));
-  };
+  
+    //Router
+    const router = useRouter();
 
   //Add Photo
-  const SubmitHandler = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    if (!user) {
-      router.push("/login");
-    } else if (title == "") {
-      setError("Valid title is required");
-    } else if (url == "") {
-      setError("Valid url is required");
-    } else if (thumbnailUrl == "") {
-      setError("Valid url is required");
-    } else {
-      let photo: Photo = {
-        albumId: albumID,
-        id: photos[0].id + 5000,
-        title: title,
-        url: url,
-        thumbnailUrl: thumbnailUrl,
-      };
-      const newPhotos = [photo, ...photos];
-      setPhotos(newPhotos);
-      setError("");
-    }
-  };
+const SubmitHandler = async (e: SyntheticEvent) => {
+  e.preventDefault();
+  if (!user) {
+    router.push("/login");
+  } else if (title == "") {
+    setError("Valid title is required");
+  } else if (url == "") {
+    setError("Valid url is required");
+  } else if (thumbnailUrl == "") {
+    setError("Valid url is required");
+  } else {
+    const photo: Photo = {
+      albumId: albumID,
+      id: Date.now(),
+      title: title,
+      url: url,
+      thumbnailUrl: thumbnailUrl,
+    };
+    newPhoto = photo;
+    console.log(photo)
+    setError("");
+  }
+};
+
 
   return (
     <div className="feed">
-      {/* Add Post Form */}
       <div className="feed__postForm m-0 p-4  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
         <form
           className="space-y-6"
@@ -157,48 +147,13 @@ export default function Users() {
           />
         </form>
       </div>
-
       {/* Albums */}
       <div className="feed__posts">
         {albums.map((album: Album) => {
           return (
             <div key={album.id}>
               <div className="postsContainer feed__posts__post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                <h2 onClick={(e) => findAlbumPhotos(e, album.id)}>
-                  Album: {album.title}
-                </h2>
-                {show === true
-                  ? photos.map((photo: Photo) => {
-                      return (
-                        <div
-                          className="post p-6  bg-white rounded-lg text-gray-900 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
-                          key={photo.id}
-                        >
-                          {user?.id === album.userId ? (
-                            <div
-                              className="float-right"
-                              onClick={(e) => DeletePhoto(e, photo.id)}
-                            >
-                              x
-                            </div>
-                          ) : null}
-                          <h2>Photo: </h2>
-                          <p className="mb-3">Album ID: {photo.albumId}</p>
-                          <p className="mb-3">Photo ID: {photo.id}</p>
-                          <p className="mb-3">Title: {photo.title}</p>
-                          <p className="mb-3">
-                            Url: <a href={photo.url}>{photo.url}</a>
-                          </p>
-                          <p className="mb-3">
-                            Thumbnail Url:{" "}
-                            <a href={photo.thumbnailUrl}>
-                              {photo.thumbnailUrl}
-                            </a>
-                          </p>
-                        </div>
-                      );
-                    })
-                  : null}
+              <PhotoComponent user={user} album={album} newPhoto={newPhoto} />
               </div>
             </div>
           );
