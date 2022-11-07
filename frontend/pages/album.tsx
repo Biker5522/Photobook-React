@@ -4,8 +4,7 @@ import { useCookies } from "react-cookie";
 import Album from "../components/interfaces/album";
 import Photo from "../components/interfaces/photo";
 import User from "../components/interfaces/user";
-import { PhotoComponent } from "../components/PhotoComponent";
-import { getPhotoByAlbumID } from "./api/CallAPI";
+import { PhotoComponent } from "../components/photoComponent";
 
 export default function Users() {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -17,7 +16,7 @@ export default function Users() {
   const [url, setUrl] = useState<string>("");
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
   const [error, setError] = useState<string>("");
-  let newPhoto: Photo;
+  const [newPhoto, setNewPhoto] = useState<Photo>();
 
   //Cookies
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
@@ -64,7 +63,7 @@ const SubmitHandler = async (e: SyntheticEvent) => {
       url: url,
       thumbnailUrl: thumbnailUrl,
     };
-    newPhoto = photo;
+    setNewPhoto(photo);
     console.log(photo)
     setError("");
   }
@@ -153,7 +152,7 @@ const SubmitHandler = async (e: SyntheticEvent) => {
           return (
             <div key={album.id}>
               <div className="postsContainer feed__posts__post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-              <PhotoComponent user={user} album={album} newPhoto={newPhoto} />
+              <PhotoComponent user={user} album={album} newPhoto={newPhoto?.albumId == album.id ? newPhoto : null} />
               </div>
             </div>
           );

@@ -26,12 +26,11 @@ export async function getPhotoByID(photoID: any) {
 
 export async function getPhotoByAlbumID(albumID: any) {
   try {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/photos`);
+    const res = await fetch(`https://jsonplaceholder.typicode.com/albums/${albumID}/photos`);
     const data = await res.json();
 
-    const photos = data.filter((p: any) => p.albumId == albumID);
-    console.log(photos);
-    return photos;
+    console.log(data);
+    return data;
   } catch (err) {
     console.log(err);
   }

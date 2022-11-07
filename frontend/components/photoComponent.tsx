@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { getPhotoByAlbumID } from "../pages/api/CallAPI";
 import Photo from "./interfaces/photo";
 
@@ -6,13 +6,31 @@ export function PhotoComponent(props: any) {
   const [show, setShow] = useState<boolean>(false);
   //Photos
   const [photos, setPhotos] = useState<Photo[]>([]);
+  const [newPhoto, setNewPhoto] = useState<Photo>();
 
+  //Get photos
+  useEffect(() => {
+    loadPhotos();
+  }, []);
 
-  const findAlbumPhotos = async (e: SyntheticEvent, albumID: number) => {
+  //Get new photo
+  useEffect(() => {
+    setNewPhoto(props.newPhoto);
+    console.log(props.newPhoto)
+  }, [props.newPhoto]);
+
+  const loadPhotos = async () => {
+    props.newPhoto
+      ? setPhotos([
+          ...(await getPhotoByAlbumID(props.album.id),
+          props.newPhoto),
+        ])
+      : setPhotos(await getPhotoByAlbumID(props.album.id));
+  };
+
+  const findAlbumPhotos = async (e: SyntheticEvent) => {
     e.preventDefault();
-    props.newPhoto ? setPhotos([props.newPhoto, ...await getPhotoByAlbumID(albumID)]) : setPhotos(await getPhotoByAlbumID(albumID));
     setShow(!show);
-    console.log('click!')
   };
 
   //Delete Photo
@@ -24,9 +42,7 @@ export function PhotoComponent(props: any) {
 
   return (
     <div>
-      <h2 onClick={(e) => findAlbumPhotos(e, props.album.id)}>
-        Album: {props.album.title}
-      </h2>
+      <h2 onClick={(e) => findAlbumPhotos(e)}>Album: {props.album.title}</h2>
       {show === true &&
         photos.map((photo: Photo) => {
           return (
