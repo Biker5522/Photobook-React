@@ -6,8 +6,7 @@ export function PhotoComponent(props: any) {
   const [show, setShow] = useState<boolean>(false);
   //Photos
   const [photos, setPhotos] = useState<Photo[]>([]);
-  const [newPhoto, setNewPhoto] = useState<Photo>();
-
+  const deletedArray: any = [];
   //Get photos
   useEffect(() => {
     loadPhotos();
@@ -15,17 +14,15 @@ export function PhotoComponent(props: any) {
 
   //Get new photo
   useEffect(() => {
-    setNewPhoto(props.newPhoto);
-    console.log(props.newPhoto)
+    if(props.newPhoto && !deletedArray.find((p: any) => p.id === props.newPhoto.id)){
+      photos.push(props.newPhoto);
+    }
+    console.log('new photo ' + props.newPhoto)
+    console.log(deletedArray);
   }, [props.newPhoto]);
 
   const loadPhotos = async () => {
-    props.newPhoto
-      ? setPhotos([
-          ...(await getPhotoByAlbumID(props.album.id),
-          props.newPhoto),
-        ])
-      : setPhotos(await getPhotoByAlbumID(props.album.id));
+    setPhotos(await getPhotoByAlbumID(props.album.id));
   };
 
   const findAlbumPhotos = async (e: SyntheticEvent) => {
@@ -37,6 +34,7 @@ export function PhotoComponent(props: any) {
   const DeletePhoto = (e: SyntheticEvent, photoId: number) => {
     e.preventDefault();
     const filteredArray = [...photos];
+    deletedArray.push(filteredArray.find((el) => el.id === photoId));
     setPhotos(filteredArray.filter((el) => el.id != photoId));
   };
 

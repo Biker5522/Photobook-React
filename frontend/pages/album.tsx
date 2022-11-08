@@ -40,7 +40,6 @@ export default function Users() {
       });
   }, []);
 
-  
     //Router
     const router = useRouter();
 
