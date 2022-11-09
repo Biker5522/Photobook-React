@@ -1,0 +1,20 @@
+.photo {
+  margin: 15px;
+  padding: 16px;
+  background-color: white;
+  color: black;
+}
+.photo h2 {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.photo p {
+  margin: 10px;
+  font-size: 18px;
+}
+.photo__infoSpan {
+  margin: 15px;
+  padding: 15px;
+  font-size: 18px;
+}
