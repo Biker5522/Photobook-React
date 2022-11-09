@@ -5,8 +5,9 @@ import Album from "../components/interfaces/album";
 import Photo from "../components/interfaces/photo";
 import User from "../components/interfaces/user";
 import { PhotoComponent } from "../components/photoComponent";
+import { getPhotoByUser } from "./api/CallAPI";
 
-export default function Users() {
+export default function Albums() {
   //Loading state
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -17,7 +18,7 @@ export default function Users() {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [user, setUser] = useState<User>();
 
-  //Get User from cookie
+  //Get user from cookie
   useEffect(() => {
     setUser(cookies.user);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -33,7 +34,7 @@ export default function Users() {
   const [url, setUrl] = useState<string>("");
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
 
-  //Get Albums
+  //Get albums
   useEffect(() => {
     setLoading(true);
     fetch("https://jsonplaceholder.typicode.com/albums")
@@ -42,6 +43,31 @@ export default function Users() {
         setAlbums(data);
         setLoading(false);
       });
+  }, []);
+
+  //Photos
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [currentUserPhotos, setCurrentUserPhotos] = useState<Photo[] | undefined>([]);
+
+  //Get photos
+  useEffect(() => {
+    setLoading(true);
+    fetch("https://jsonplaceholder.typicode.com/photos")
+      .then((res) => res.json())
+      .then((data) => {
+        setPhotos(data);
+        setLoading(false);
+      });
+  }, []);
+
+  //Get current user photos
+  const loadUserPhotos = async () => {
+    
+  }
+
+  //Set current user photos
+  useEffect(() => {
+    cookies.user ? loadUserPhotos() : null;
   }, []);
 
   //New photo
@@ -72,9 +98,90 @@ export default function Users() {
     }
   };
 
+  //Delete photo
+  const DeletePhoto = (e: SyntheticEvent, photoId: number) => {
+    e.preventDefault();
+    const filteredArray = [...photos];
+    setPhotos(filteredArray.filter((el) => el.id != photoId));
+  };
+
+    //Show for display component with photos
+    const [showAddPhoto, setShowAddPhoto] = useState<boolean>(false);
+    const [showAlbums, setShowAlbums] = useState<boolean>(false);
+    const [showPhotos, setShowPhotos] = useState<boolean>(false);
+    const [showUserPhotos, setShowUserPhotos] = useState<boolean>(false);
+    const [showLoggedUserPhotos, setShowLoggedUserPhotos] = useState<boolean>(false);
+  
+    //Display add new photos form
+    const displayAddPhotoOption = async (e: SyntheticEvent) => {
+      e.preventDefault();
+      setShowAddPhoto(!showAddPhoto);
+      setShowAlbums(false);
+      setShowPhotos(false);
+      setShowUserPhotos(false);
+      setShowLoggedUserPhotos(false);
+      console.log('works');
+    };
+  
+    //Display existing albums
+    const displayAlbums = async (e: SyntheticEvent) => {
+      e.preventDefault();
+      setShowAlbums(!showAlbums);
+      setShowAddPhoto(false);
+      setShowPhotos(false);
+      setShowUserPhotos(false);
+      setShowLoggedUserPhotos(false);
+      console.log('works');
+    };
+  
+    //Display existing photos
+    const displayPhotos = async (e: SyntheticEvent) => {
+      e.preventDefault();
+      setShowPhotos(!showPhotos);
+      setShowAddPhoto(false);
+      setShowAlbums(false);
+      setShowUserPhotos(false);
+      setShowLoggedUserPhotos(false);
+      console.log('works');
+    };
+  
+    //Display specific user photos
+    const displaySpecificUserPhotos = async (e: SyntheticEvent) => {
+      e.preventDefault();
+      setShowUserPhotos(!showUserPhotos);
+      setShowAddPhoto(false);
+      setShowAlbums(false);
+      setShowPhotos(false);
+      setShowLoggedUserPhotos(false);
+      console.log('works');
+    };
+  
+    //Display logged in user photos
+    const displayLoggedUserPhotos = async (e: SyntheticEvent) => {
+      e.preventDefault();
+      setShowLoggedUserPhotos(!showLoggedUserPhotos);
+      setShowAddPhoto(false);
+      setShowAlbums(false);
+      setShowPhotos(false);
+      setShowUserPhotos(false);
+      console.log('works');
+      setCurrentUserPhotos(await getPhotoByUser(cookies.user));
+      console.log(currentUserPhotos)
+    };
+
   return (
     <div className="album">
-      <div className="album__addPhotoForm rounded-lg">
+      {/* Albums navbar */}
+      <div className="albumNavComponent rounded-lg">
+      <h2 onClick={(e) => displayAddPhotoOption(e)}>Add new photo</h2>
+      <h2 onClick={(e) => displayAlbums(e)}>Show albums</h2>
+      <h2 onClick={(e) => displayPhotos(e)}>Show all photos</h2>
+      <h2 onClick={(e) => displaySpecificUserPhotos(e)}>Look for another user photos</h2>
+      <h2 onClick={(e) => displayLoggedUserPhotos(e)}>Show user photos</h2>
+      </div>
+      {/* Add Photo */}
+      {showAddPhoto === true ? 
+      (<div className="album__addPhotoForm rounded-lg">
         <form
           className="space-y-6"
           action="#"
@@ -127,9 +234,11 @@ export default function Users() {
             value="Submit"
           />
         </form>
-      </div>
-      {/* Albums */}
-      <div className="album__showAlbums">
+      </div>) : null}
+      {/* Show Albums */}
+      {showAlbums === true ? 
+      (
+        <div className="album__showAlbums">
         {albums.map((album: Album) => {
           return (
             <div key={album.id} className="album__albumPhotos rounded-lg">
@@ -142,6 +251,69 @@ export default function Users() {
           );
         })}
       </div>
+      ) : null}
+      {/* Show all photos */}
+      {showPhotos === true ? 
+      (
+        photos.map((photo: Photo) => {
+          return (
+            <div
+              className="photo rounded-lg border border-gray-200 shadow-md"
+              key={photo.id}
+            >
+            {user?.id === albums.find((a) => a.id === photo.albumId)?.userId ? (
+              <div
+                className="float-right"
+                onClick={(e) => DeletePhoto(e, photo.id)}
+              >
+                x
+              </div>
+            ) : null}
+              <h2>Photo: {photo.title}</h2>
+              <p>Album: {photo.albumId}</p>
+              <p>Photo: {photo.id - (photo.albumId * 50 - 50)}</p> {/* it works, for now idk how to fix error here */}
+              <p>
+                Url: <a href={photo.url}>{photo.url}</a>
+              </p>
+              <p>
+                Thumbnail Url: <a href={photo.thumbnailUrl}>{photo.thumbnailUrl}</a>
+              </p>
+            </div>
+          );
+        })
+      ) : null}
+      {/* Look for another user photos */}
+      
+      {/* Show user photos */}
+      {showUserPhotos === true ? 
+      (
+        currentUserPhotos?.map((photo: Photo) => {
+          return (
+            <div
+              className="photo rounded-lg border border-gray-200 shadow-md"
+              key={photo.id}
+            >
+            {user?.id === albums.find((a) => a.id === photo.albumId)?.userId ? (
+              <div
+                className="float-right"
+                onClick={(e) => DeletePhoto(e, photo.id)}
+              >
+                x
+              </div>
+            ) : null}
+              <h2>Photo: {photo.title}</h2>
+              <p>Album: {photo.albumId}</p>
+              <p>Photo: {photo.id - (photo.albumId * 50 - 50)}</p> {/* it works, for now idk how to fix error here */}
+              <p>
+                Url: <a href={photo.url}>{photo.url}</a>
+              </p>
+              <p>
+                Thumbnail Url: <a href={photo.thumbnailUrl}>{photo.thumbnailUrl}</a>
+              </p>
+            </div>
+          );
+        })
+      ) : null}
     </div>
   );
 }

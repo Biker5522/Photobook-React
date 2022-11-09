@@ -1,3 +1,5 @@
+import Photo from "../../components/interfaces/photo";
+
 export async function getUserByUsername(username: any) {
   try {
     const res = await fetch(`https://jsonplaceholder.typicode.com/users`);
@@ -11,14 +13,54 @@ export async function getUserByUsername(username: any) {
   }
 }
 
-export async function getPhotoByID(photoID: any) {
+export async function getPhotos() {
   try {
     const res = await fetch(`https://jsonplaceholder.typicode.com/photos`);
     const data = await res.json();
 
-    const photo = data.find((p: any) => p.id == photoID.current?.value);
-    console.log(photo);
-    return photo;
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getPhotoByID(photoID: any) {
+  try {
+    const res = await fetch(`https://jsonplaceholder.typicode.com/photos/${photoID}`);
+    const data = await res.json();
+
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getPhotoByUser(user: any) {
+  try {
+    const resPhotos = await fetch(`https://jsonplaceholder.typicode.com/photos`);
+    const dataPhotos = await resPhotos.json();
+    const resAlbums = await fetch(`https://jsonplaceholder.typicode.com/albums`);
+    const dataAlbums = await resAlbums.json();
+
+    const filteredAlbumsData = dataAlbums.filter((a: any) => a.userId === user.id);
+
+    const data: Photo[] = []
+
+    for(let i = 0; i < filteredAlbumsData.length; i++)
+    {
+      for(let j = 0; j < dataPhotos.length; j++)
+      {
+        if(filteredAlbumsData[i].id === dataPhotos[j].albumId)
+        {
+          data.push(dataPhotos[j]);
+        }
+      }
+    }
+
+    console.log(data);
+    return data;
   } catch (err) {
     console.log(err);
   }

@@ -3,7 +3,7 @@ import Photo from '../components/interfaces/photo';
 import { getPhotoByID } from './api/CallAPI';
 
 
-export default function Users() {
+export default function Photos() {
   
     const photoID = useRef<HTMLInputElement>(null);
     const [photo, setPhoto] = useState<Photo>()
