@@ -86,7 +86,7 @@ export default function Feed() {
       {/* Add Post Form */}
       <div className="feed__postForm m-0 p-4  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
         <form
-          className="space-y-6"
+          className="space-y-1"
           action="#"
           id="postForm"
           onSubmit={SubmitHandler}
@@ -125,7 +125,7 @@ export default function Feed() {
             <p className="text-red-500 "> {error}</p>
           </div>
           <input
-            className="float-right text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+            className="float-right text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
             type="submit"
             value="Submit"
           />
@@ -140,14 +140,13 @@ export default function Feed() {
               <div className="postsContainer feed__posts__post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                 {user?.id === post.userId ? (
                   <div
-                    className="float-right"
+                    className="float-right feed__posts__post__delete"
                     onClick={(e) => DeletePost(e, post.id)}
                   >
                     x
                   </div>
                 ) : null}
-                <h2>{post.title}</h2>
-
+                <h3 className="feed__posts__post__title">{post.title}</h3>
                 <p className="mb-3">{post.body}</p>
                 <a
                   className="mb-3 text-grey commentsPost feed__posts__post__commentsInfo float-right"
@@ -155,7 +154,6 @@ export default function Feed() {
                 >
                   comments <NumberOfComments postId={post.id} />
                 </a>
-
                 <p className="mb-3  text-grey commentsPost float-left">
                   <AuthorOfPost userId={post.userId} />
                 </p>
