@@ -39,23 +39,18 @@ export async function getPhotoByID(photoID: any) {
 
 export async function getPhotoByUser(user: any) {
   try {
-    const resPhotos = await fetch(`https://jsonplaceholder.typicode.com/photos`);
-    const dataPhotos = await resPhotos.json();
-    const resAlbums = await fetch(`https://jsonplaceholder.typicode.com/albums`);
-    const dataAlbums = await resAlbums.json();
+    const resUserAlbums = await fetch(`https://jsonplaceholder.typicode.com/users/${user.id}/albums`);
+    const dataUserAlbums = await resUserAlbums.json();
+    const data: any = [];
 
-    const filteredAlbumsData = dataAlbums.filter((a: any) => a.userId === user.id);
-
-    const data: Photo[] = []
-
-    for(let i = 0; i < filteredAlbumsData.length; i++)
+    for(let i = 0; i < dataUserAlbums.length; i++)
     {
+      const resPhotos = await fetch(`https://jsonplaceholder.typicode.com/albums/${dataUserAlbums[i].id}/photos`);
+      const dataPhotos = await resPhotos.json();
+
       for(let j = 0; j < dataPhotos.length; j++)
       {
-        if(filteredAlbumsData[i].id === dataPhotos[j].albumId)
-        {
           data.push(dataPhotos[j]);
-        }
       }
     }
 

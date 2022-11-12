@@ -47,7 +47,7 @@ export default function Albums() {
 
   //Photos
   const [photos, setPhotos] = useState<Photo[]>([]);
-  const [currentUserPhotos, setCurrentUserPhotos] = useState<Photo[] | undefined>([]);
+  const [currentUserPhotos, setCurrentUserPhotos] = useState<Photo[]>([]);
 
   //Get photos
   useEffect(() => {
@@ -62,12 +62,14 @@ export default function Albums() {
 
   //Get current user photos
   const loadUserPhotos = async () => {
-    
+    setCurrentUserPhotos(await getPhotoByUser(cookies.user));
+    console.log(currentUserPhotos)
   }
 
   //Set current user photos
   useEffect(() => {
-    cookies.user ? loadUserPhotos() : null;
+    loadUserPhotos();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //New photo
@@ -165,7 +167,6 @@ export default function Albums() {
       setShowPhotos(false);
       setShowUserPhotos(false);
       console.log('works');
-      setCurrentUserPhotos(await getPhotoByUser(cookies.user));
       console.log(currentUserPhotos)
     };
 
@@ -285,9 +286,9 @@ export default function Albums() {
       {/* Look for another user photos */}
       
       {/* Show user photos */}
-      {showUserPhotos === true ? 
+      {showLoggedUserPhotos === true ? 
       (
-        currentUserPhotos?.map((photo: Photo) => {
+        currentUserPhotos.map((photo: Photo) => {
           return (
             <div
               className="photo rounded-lg border border-gray-200 shadow-md"
