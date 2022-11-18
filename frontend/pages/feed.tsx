@@ -73,7 +73,7 @@ export default function Feed() {
         title: title,
         body: description,
         userId: user.id,
-        id: posts[0].id + 100,
+        id: Date.now(),
       }
       const newPosts = [post, ...posts]
       setPosts(newPosts)
@@ -125,7 +125,7 @@ export default function Feed() {
             <p className="text-red-500 "> {error}</p>
           </div>
           <input
-            className="float-right text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+            className="float-right text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300"
             type="submit"
             value="Submit"
           />

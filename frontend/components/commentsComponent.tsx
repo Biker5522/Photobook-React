@@ -36,7 +36,7 @@ export function CommentsComponent(props: any) {
         body: description,
         email: user.email,
         postId: props.postId,
-        id: comments[0].id + 100,
+        id: Date.now(),
       }
       const newComments = [comment, ...comments]
       setComments(newComments)
@@ -54,7 +54,7 @@ export function CommentsComponent(props: any) {
     return (
       <div className="commentsPage flex justify-center  p-4   dark:bg-gray-800 dark:border-gray-700">
         <form
-          className="commentsPage_commentForm space-y-6 mb-4"
+          className="commentsPage_commentForm space-y-1 mb-2"
           action="#"
           id="postForm"
           onSubmit={SubmitHandler}
@@ -110,7 +110,7 @@ export function CommentsComponent(props: any) {
                   x
                 </div>
               ) : null}
-              <h2 className="Title">{comment.name}</h2>
+              <h3 className="commentsPage__comment__title">{comment.name}</h3>
               <p className="Body">{comment.body}</p>
             </div>
           )

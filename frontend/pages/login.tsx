@@ -1,8 +1,10 @@
 import { SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { getUserByLoginAndPassword, getUserPosts } from './api/CallAPI'
+
 import { useCookies } from 'react-cookie'
 import Post from '../components/interfaces/post'
 import User from '../components/interfaces/user'
+import { useRouter } from 'next/router'
 
 export default function Login() {
   const userLogin = useRef<HTMLInputElement>(null) // login = email
@@ -11,7 +13,7 @@ export default function Login() {
   const [user, setUser] = useState<User>()
   const [posts, setPosts] = useState<Post[]>([])
   const [showPosts, setShowPosts] = useState<Boolean>(false)
-
+  const router = useRouter()
   //Get user from API
   async function getUser(e: SyntheticEvent) {
     e.preventDefault()
@@ -29,6 +31,8 @@ export default function Login() {
   useEffect(() => {
     if (user != null) {
       setCookie('user', user)
+      router.push('/')
+      router.reload()
     }
   }, [user])
 
