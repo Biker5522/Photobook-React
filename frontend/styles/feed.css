@@ -4,7 +4,10 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  background-color: black;
+  background-image: url('https://wallpaperaccess.com/full/2331906.jpg');
+  background-position-x: -40rem;
+  background-size: 170%;
+  background-repeat: repeat-y;
 }
 .feed h2 {
   font-size: 25px;
@@ -52,10 +55,12 @@
   font-size: 17px;
   font-weight: bold;
   margin-bottom: 10px;
-  text-transform: uppercase;
+  color: white;
+  text-shadow: -1px -1px 0 rgb(85, 85, 85), 1px -1px 0 rgb(86, 86, 86),
+    -1px 1px 0 rgb(75, 68, 68), 1px 1px 0 #000;
 }
 .feed__posts__post__commentsInfo {
-  color: grey;
+  color: rgb(0, 34, 168);
   font-size: 15px;
 }
 .feed__posts__post__commentsInfo:hover {

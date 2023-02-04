@@ -137,7 +137,7 @@ export default function Feed() {
         {posts.map((post: Post) => {
           return (
             <div key={post.id}>
-              <div className="postsContainer feed__posts__post p-6  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+              <div className="p-6 text-black  rounded-lg border-b-2 border-r-2 border-gray-500 shadow-sm shadow-gray-400 bg-white bg-opacity-80 backdrop-filter backdrop-blur-lg  ">
                 {user?.id === post.userId ? (
                   <div
                     className="float-right feed__posts__post__delete"
